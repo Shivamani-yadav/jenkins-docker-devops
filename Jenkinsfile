@@ -1,4 +1,4 @@
-
+```groovy
 pipeline {
     agent any
 
@@ -26,13 +26,22 @@ pipeline {
 
     post {
         success {
-            echo 'SUCCESS: CI/CD pipeline completed!'
+            emailext(
+                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Great news! The Jenkins pipeline completed successfully.\n\nJob: ${env.JOB_NAME}\nBuild: #${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}",
+                to: 'nekuavasarama21@gmail.com'
+            )
         }
         failure {
-            echo 'FAILURE: Check the Jenkins console output.'
+            emailext(
+                subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "The Jenkins pipeline failed. Please check the console output.\n\nJob: ${env.JOB_NAME}\nBuild: #${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}",
+                to: 'nekuavasarama21@gmail.com'
+            )
         }
         always {
             echo 'Pipeline execution finished.'
         }
     }
 }
+```
