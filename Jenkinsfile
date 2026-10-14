@@ -1,4 +1,4 @@
-```groovy
+
 pipeline {
     agent any
 
@@ -32,6 +32,7 @@ pipeline {
                 to: 'nekuavasarama21@gmail.com'
             )
         }
+
         failure {
             emailext(
                 subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
@@ -39,9 +40,9 @@ pipeline {
                 to: 'nekuavasarama21@gmail.com'
             )
         }
+
         always {
             echo 'Pipeline execution finished.'
         }
     }
 }
-```
